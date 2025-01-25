@@ -1,0 +1,25 @@
+{% extends "app/base.html" %}
+{% block content %}
+<div class="row mt-5">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <!-- Email input -->
+    <div class="form-floating mb-3">
+      <input type="email" id="email" class="form-control" />
+      <label class="form-label" for="email">Registered Email Address</label>
+    </div>
+
+    <!-- Password input -->
+    <div class="form-floating mb-3">
+      <p><h5>Reset your password</h5></p>
+      <p>Enter your registered email, <br>
+        you will receive link and steps to reset your password on your registered email if it matches with our database</p>
+    </div>
+    <!-- Submit button -->
+    <div class="d-flex justify-content-center">
+        <button  type="button" class="btn btn-primary mb-3">Submit Request</button>
+    </div>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+{% endblock  %}

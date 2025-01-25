@@ -1,0 +1,33 @@
+{% extends "app/base.html" %}
+{% block content %}
+<div class="row mt-5">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <!-- Email input -->
+    <div class="form-floating mb-3">
+      <input type="password" id="opwd" class="form-control" />
+      <label class="form-label" for="email">Old Password</label>
+    </div>
+
+    <!-- Password input -->
+    <div class="form-floating mb-3">
+      <input type="password" id="pwd1" class="form-control" />
+      <label class="form-label" for="pwd1">New Password</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" id="pwd2" class="form-control" />
+        <label class="form-label" for="pwd2">Repete Password</label>
+      </div>
+    <!-- Submit button -->
+    <div class="d-flex justify-content-center">
+        <button  type="button" class="btn btn-primary mb-3">Submit Request</button>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <!-- Simple link -->
+      <a href="{% url "resetpwd" %}">Forgot password?</a>
+    </div>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+{% endblock  %}

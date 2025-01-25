@@ -1,0 +1,14 @@
+{% extends "app/base.html" %}
+{% block content %}
+<h1>Success</h1>
+<div class="container">
+    <p>Transaction successful check your registered email id to check further details</p>
+
+    {% if page_message %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <p>{{page__message}}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+</div>
+{% endblock  %}

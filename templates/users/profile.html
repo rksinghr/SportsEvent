@@ -1,0 +1,106 @@
+{% extends "app/base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col">
+    <h3>Profile</h3>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-floating mb-1">
+                    <input type="text" id="fname" name="fname" value="{{ profile_rec.0.firstName }}" class="form-control mb-1" required />
+                    <label class="form-label" for="fname">First Name</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="text" id="lname" name="lname" value="{{ profile_rec.0.lastName }}" class="form-control" required />
+                    <label class="form-label" for="lname">Last Name</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input disabled type="email" id="email" name="email" value="{{ profile_rec.0.eMail }}" class="form-control" required />
+                    <label class="form-label" for="email">Email</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="date" id="dob" name="dob" value="{{ profile_rec.0.dob|date:'Y-m-d' }}" class="form-control" required />
+                    <label class="form-label" for="dob">Date Of Birth</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="text" id="mob" name="mob" value="{{ profile_rec.0.mobNumber }}" class="form-control" required />
+                    <label class="form-label" for="mob">Mobile</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="text" id="altmob" name="altmob" value="{{ profile_rec.0.altMobNumber }}" class="form-control"/>
+                    <label class="form-label" for="altmob">Alternate Mobile</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating mb-1">
+                    <input type="text" id="addl1" name="addl1" value="{{ profile_rec.0.addressLine1 }}" class="form-control mb-1" />
+                    <label class="form-label" for="addl1">Address Line 1</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="text" id="addl2" name="addl2" value="{{ profile_rec.0.addressLine2 }}" class="form-control" />
+                    <label class="form-label" for="addl2">Address Line 2</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="text" id="pin" name="pin" value="{{ profile_rec.0.pin }}" class="form-control" required/>
+                    <label class="form-label" for="pin">PIN Code</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="text" id="state" name="state" value="{{ profile_rec.0.state }}" class="form-control" />
+                    <label class="form-label" for="state">State</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="dist" id="dist" name="dist" value="{{ profile_rec.0.district }}" class="form-control" />
+                    <label class="form-label" for="dist">District</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="text" id="city" name="city" value="{{ profile_rec.0.city }}" class="form-control" />
+                    <label class="form-label" for="city">City</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating mb-1">
+                    <input type="text" id="sch" name="sch" value="{{ profile_rec.0.school }}" class="form-control mb-1" />
+                    <label class="form-label" for="sch">School Name</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="text" id="acad" name="acad" value="{{ profile_rec.0.academy }}" class="form-control" />
+                    <label class="form-label" for="acad">Academy Name</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="text" id="uid" name="uid" value="{{ profile_rec.0.aadhar }}" class="form-control" />
+                    <label class="form-label" for="uid">Aadhar</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="text" id="psport" name="psport" value="{{ profile_rec.0.sport }}" class="form-control" />
+                    <label class="form-label" for="psport">Sport Name</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="text" id="height" name="height" value="{{ profile_rec.0.height }}" class="form-control" />
+                    <label class="form-label" for="height">Height</label>
+                </div>
+                <div class="form-floating mb-1">
+                    <input type="text" id="weight" name="weight" value="{{ profile_rec.0.weight }}" class="form-control" />
+                    <label class="form-label" for="weight">Weight</label>
+                </div>
+            </div>
+        </div>
+        <!-- Submit button -->
+        <div class="d-flex justify-content-center">
+            <div class="row">
+                <div class="col">
+                    <button  type="submit" class="btn btn-primary mb-3">Save</button>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary mb-3">
+                        <a style="color: aliceblue;" href="{% url "home" %}">Exit</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+{% endblock  %}

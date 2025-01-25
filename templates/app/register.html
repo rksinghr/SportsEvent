@@ -1,0 +1,37 @@
+{% extends "app/base.html" %}
+{% block content %}
+
+<form action="" method="POST">
+{% csrf_token %}
+<div class="row mt-1">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <h3>REGISTER</h3>
+    {% for race in myRace %}
+      <input type="text" disabled="True" name="event" id="event" class="form-control mb-1" value="{{ race.name }}"/>
+    {% endfor %}
+    
+    <input type="text" name="fName" id="fName" class="form-control mb-1" placeholder="First Name"/>
+    <input type="text" name="lName" id="lName" class="form-control mb-1" placeholder="Last Name"/>
+    <div class="form-floating mb-1">
+      <input type="date" name="usrdob" id="usrdob" class="form-floating form-control" />
+      <label class="form-label" for="usrdob">Date Of Birth</label>
+    </div>
+    <div class="form-floating mb-1">
+      <select class="form-select" id="gender" name="gender">
+        <option selected>Choose...</option>
+        <option value="1">Male</option>
+        <option value="2">Female</option>
+      </select>
+      <label class="form-label" for="gender">Gender</label>
+    </div>
+    <input type="email" name="email" id="email" class="form-control mb-1" placeholder="E-mail"/>
+    <input type="text" name="mob" id="mob" class="form-control mb-1" placeholder="Mobile"/>
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+    </div>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+</form>
+{% endblock  %}
