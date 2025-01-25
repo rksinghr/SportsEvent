@@ -1,0 +1,21 @@
+{% extends "app/base.html" %}
+{% block content %}
+<h1>Season's Races</h1>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for race in eventList %}
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ race.name }}</h5>
+                {% comment %} <h6 class="card-subtitle mb-2 text-muted">Type: {{ race.raceType }}</h6> {% endcomment %}
+                <p class="card-text mb-1">Date: {{ race.startDate }}</p>
+                <p class="card-text mb-1">Type: {{ race.raceType }}</p>
+                <p class="card-text">Location: {{ race.location }}</p>
+                <a href="{% url "register" race.id %}" class="card-link">Register</a>
+                <a href="#" class="card-link">Results</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock  %}
