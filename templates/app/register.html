@@ -10,20 +10,28 @@
     {% for race in myRace %}
       <input type="text" disabled="True" name="event" id="event" class="form-control mb-1" value="{{ race.name }}"/>
     {% endfor %}
-    
+    <div class="mb-1">
+      <select class="form-select" id="category" name="category">
+        <option selected>Choose Category</option>
+        <option value="51">Amateur</option>
+        <option value="52">Beginner</option>
+        <option value="53">Elite</option>
+      </select>
+      {% comment %} <label class="form-label" for="gender">Category</label> {% endcomment %}
+    </div>
     <input type="text" name="fName" id="fName" class="form-control mb-1" placeholder="First Name"/>
     <input type="text" name="lName" id="lName" class="form-control mb-1" placeholder="Last Name"/>
     <div class="form-floating mb-1">
       <input type="date" name="usrdob" id="usrdob" class="form-floating form-control" />
       <label class="form-label" for="usrdob">Date Of Birth</label>
     </div>
-    <div class="form-floating mb-1">
+    <div class="mb-1">
       <select class="form-select" id="gender" name="gender">
-        <option selected>Choose...</option>
+        <option selected>Select Gender</option>
         <option value="1">Male</option>
         <option value="2">Female</option>
       </select>
-      <label class="form-label" for="gender">Gender</label>
+      {% comment %} <label class="form-label" for="gender">Gender</label> {% endcomment %}
     </div>
     <input type="email" name="email" id="email" class="form-control mb-1" placeholder="E-mail"/>
     <input type="text" name="mob" id="mob" class="form-control mb-1" placeholder="Mobile"/>

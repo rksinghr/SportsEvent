@@ -3,6 +3,9 @@ from datetime import datetime, timedelta
 from azure.communication.email import EmailClient
 from .models import otpBank
 import pytz
+import qrcode
+from django.http import HttpResponse
+from io import BytesIO
 
 utc = pytz.utc
 
@@ -28,7 +31,6 @@ def email_service(to_add, subject_text, msg_txt):
     except Exception as ex:
         print(ex)
 
-
 def generate_otp(usr):
     otp_secret_key = pyotp.random_base32()
     hotp = pyotp.HOTP(otp_secret_key)
@@ -44,3 +46,63 @@ def generate_otp(usr):
     )
     
     return otp, valid_date
+
+def generate_qr_code(request, data):
+    # Create a QR code
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+
+    # Create an image from the QR Code instance
+    img = qr.make_image(fill='black', back_color='white')
+
+    # Save the image to a BytesIO object
+    img_io = BytesIO()
+    img.save(img_io, 'PNG')
+    img_io.seek(0)
+
+    # Generate a unique CID for embedding the image in the email body
+    image_data = img_io.getvalue()
+
+    # Send an email with the QR code embedded
+    subject = 'Your QR Code'
+    message = 'Here is your QR code:'
+    from_email = settings.DEFAULT_FROM_EMAIL
+    to_email = 'recipient@example.com'  # Set the recipient email address
+
+    email = EmailMessage(
+        subject=subject,
+        body=message,
+        from_email=from_email,
+        to=[to_email],
+    )
+    email.content_subtype = "html"
+
+    # Attach the QR code image as an inline image
+    email.attach(
+        'qrcode.png',
+        image_data,
+        'image/png',
+    )
+    email.inline_image_map = {
+        'cid:qrcode': 'qrcode.png',
+    }
+
+    # HTML body with the image referenced as a Content-ID (cid)
+    email.body = f'''
+    <p>Here is your QR code:</p>
+    <img src="cid:qrcode" alt="QR Code"/>
+    '''
+
+    # Send the email
+    email.send()
+
+
+    # Return the image as HTTP response
+    return HttpResponse(img_io, content_type="image/png")
+
