@@ -8,7 +8,6 @@ from .serializers import RegSerializer
 from .forms import AthRegForm
 import requests
 
-
 def home_view(request):
     eventList = raceMaster.objects.all().values()
     return render(request, 'app/home.html', {'eventList': eventList})
@@ -72,10 +71,12 @@ def success_view(request):
     msg = "message"
     return render(request, 'app/success.html', {'page__message': msg})
 
+@login_required
 def reg_list_view(request):
     reg = athleteRegistration.objects.all()
     return render(request, 'app/reg_list.html', {'reg': reg})
 
+@login_required
 def edit_reg_view(request, pk):
     reg = get_object_or_404(athleteRegistration, pk=pk)
     if request.method == 'POST':
@@ -87,6 +88,7 @@ def edit_reg_view(request, pk):
         form = AthRegForm(instance=reg)
     return render(request, 'app/edit_reg.html', {'form': form, 'reg': reg})
 
+@login_required
 def delete_reg_view(request, pk):
     reg = get_object_or_404(athleteRegistration, pk=pk)
     if request.method == 'POST':
