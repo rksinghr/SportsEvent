@@ -2,5 +2,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('gen_cert/', views.generate_certificate, name='generate_certificate'),
+    path('certificate/', views.certificate_view, name='certificate'),
 ]

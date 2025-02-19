@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class athleteRegistration(models.Model):
     firstName = models.CharField(max_length=50)
@@ -24,6 +25,15 @@ class raceMaster(models.Model):
     endDate = models.DateField(blank=True, null=True)
     regStartDate = models.DateField(blank=True, null=True)
     regEndDate = models.DateField(blank=True, null=True)
+
+    @property
+    def is_Active(self):
+        if self.regStartDate < timezone.now().date() and self.regEndDate > timezone.now().date():
+            return 0
+        elif self.regStartDate < timezone.now().date() and self.regEndDate < timezone.now().date():
+            return 1
+        else:
+            return 2
 
     def __str__(self):
         return self.name

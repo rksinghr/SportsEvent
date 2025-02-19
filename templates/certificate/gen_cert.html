@@ -1,9 +1,87 @@
-<form action="{% url 'generate_certificate' %}" method="get">
-    <label for="name">Participant Name:</label>
-    <input type="text" name="name" required>
-    <br>
-    <label for="position">Position:</label>
-    <input type="text" name="position" required>
-    <br>
-    <button type="submit">Generate Certificate</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate</title>
+    <style>
+        /* Basic styling for the certificate */
+        .certificate-container {
+            position: relative;
+            width: 500px;
+            height: 310px;
+            background-image: url('/static/media/HRC_Certificate.jpeg'); /* Use your certificate image */
+            background-size: contain; /* Ensures the image fits within the container */
+            background-repeat: no-repeat; /* Prevents image repetition */
+            text-align: center;
+            padding: 50px;
+        }
+
+        /* Styling for the editable name */
+        .editable-name {
+            position: absolute;
+            top: 200px; /* Adjust based on where you want the name */
+            left: 70%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            font-weight: bold;
+            color: #000;
+            font-family: 'Arial', sans-serif;
+            border: none;
+            background: transparent;
+            text-align: center;
+            width: 300px;
+        }
+
+        /* Button for generating PDF */
+        .generate-pdf {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .generate-pdf:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <!-- Include jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+<body>
+    <div class="certificate-container">
+        <input type="text" id="name-input" class="editable-name" value="John Doe" placeholder="Enter Name" />
+        <br>
+    </div>
+    <div><button class="generate-pdf" onclick="generatePDF()">Download as PDF</button></div>
+
+    <script>
+        // JavaScript function to generate PDF from the updated certificate
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Grab the certificate container (we'll use html2canvas to capture it as an image)
+            const certificate = document.querySelector('.certificate-container');
+
+            // Use html2canvas to capture the certificate as an image
+            html2canvas(certificate).then(function(canvas) {
+                // Convert the canvas to an image
+                const imgData = canvas.toDataURL('image/jpeg');
+                
+                // Add the image to the PDF
+                doc.addImage(imgData, 'JPEG', 10, 10, 180, 140); // Adjust size and position as needed
+
+                // Download the PDF
+                doc.save('HRC_Certificate.pdf');
+            }).catch(function(error) {
+                console.error("Error in html2canvas:", error);
+            });
+        }
+    </script>
+</body>
+</html>

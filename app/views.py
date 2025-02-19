@@ -9,7 +9,7 @@ from .forms import AthRegForm
 import requests
 
 def home_view(request):
-    eventList = raceMaster.objects.all().values()
+    eventList = raceMaster.objects.all()
     return render(request, 'app/home.html', {'eventList': eventList})
 
 @login_required

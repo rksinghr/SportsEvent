@@ -1,50 +1,40 @@
-from django.http import HttpResponse
+import requests
+from io import BytesIO
 from django.shortcuts import render
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from PIL import Image
-import io
+from PIL import Image, ImageDraw, ImageFont
+from django.templatetags.static import static
 
-def generate_certificate(request):
-    # Get participant details from form or query parameters
-    name = request.GET.get('name', 'Participant')
-    position = request.GET.get('position', 'Position')
+# Function to fetch, add text, and resize image
+def fetch_edit_and_save_image(image_url, text, position, output_path):
+    # Fetch image from URL
+    response = requests.get(image_url)
+    img = Image.open(BytesIO(response.content))
 
-    # Create an in-memory file-like object for the PDF
-    buffer = io.BytesIO()
+    # Resize to a 1:1 ratio (e.g., square the smallest dimension)
+    width, height = img.size
+    new_size = min(width, height)
+    img_resized = img.resize((new_size, new_size))
 
-    # Create the PDF using reportlab
-    p = canvas.Canvas(buffer, pagesize=letter)
-    width, height = letter
+    # Add text to the image at the specified position
+    draw = ImageDraw.Draw(img_resized)
 
-    # Draw certificate image (you can adjust this path to the actual image location)
-    cert_image = Image.open('path/to/certificate_template.png')
-    cert_image_width, cert_image_height = cert_image.size
-    p.drawImage('path/to/certificate_template.png', 0, height - cert_image_height, width=cert_image_width, height=cert_image_height)
+    # You can use a basic font or load a custom one. We'll use the default font here.
+    font = ImageFont.load_default()
 
-    # Set font and text size for participant name and position
-    p.setFont("Helvetica-Bold", 36)
-    p.drawString(100, height - 200, f"Certificate of Completion")
-    
-    p.setFont("Helvetica", 24)
-    p.drawString(100, height - 300, f"This is to certify that")
-    p.setFont("Helvetica-Bold", 30)
-    p.drawString(100, height - 350, f"{name}")
-    
-    p.setFont("Helvetica", 24)
-    p.drawString(100, height - 450, f"Position: {position}")
+    # Add the text to the image at the specified position
+    draw.text(position, text, font=font, fill="white")  # You can change the text color here
 
-    # Save the PDF to the buffer
-    p.showPage()
-    p.save()
+    # Save the edited image as a PDF
+    img_resized.save(output_path, "PDF")
 
-    # Move to the beginning of the StringIO buffer
-    buffer.seek(0)
+def certificate_view(request):
+    image_url = static('media/HRC_Certificate.jpeg')
+    # image_url = "/static/media/HRC_Certificate.jpeg"
+    text_to_add = "Some Name"
+    text_position = (50, 50)  # Specify the (x, y) coordinates where you want the text to appear
+    output_pdf_path = "HRC_Cert.pdf"
 
-    # Return the PDF as a response
-    response = HttpResponse(buffer, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="certificate.pdf"'
-    return response
+    if request.method == "POST":
+        fetch_edit_and_save_image(image_url, text_to_add, text_position, output_pdf_path)
 
-def certificate_form(request):
-    return render(request, 'certificate/form.html')
+    return render(request, 'certificate/gen_cert1.html')
