@@ -6,7 +6,9 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sports_event.settings')
+    setttings_module = 'sports_event.deployment' if 'WEBSITE_HOSTNAME' in os.environ else 'sports_event.settings' 
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', setttings_module)
+    # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sports_event.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

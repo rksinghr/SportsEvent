@@ -1,0 +1,10 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <h1>Delete Registration</h1>
+    <h3>Are you sure you want to delete the registration "{{ reg.firstName }}"?</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Yes, Delete</button>
+    </form>
+    <a href="{% url 'reg_list' %}">Cancel</a>
+{% endblock %}

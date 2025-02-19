@@ -11,8 +11,13 @@
                 <p class="card-text mb-1">Date: {{ race.startDate }}</p>
                 <p class="card-text mb-1">Type: {{ race.raceType }}</p>
                 <p class="card-text">Location: {{ race.location }}</p>
-                <a href="{% url "register" race.id %}" class="card-link">Register</a>
+                {% if race.is_Active == 1 %}
                 <a href="#" class="card-link">Results</a>
+                {% elif race.is_Active == 0 %}
+                <a href="{% url "register" race.id %}" class="card-link">Register</a>
+                {% else %}
+                <p>Registrations not open yet</p>
+                {% endif %}
             </div>
         </div>
     </div>

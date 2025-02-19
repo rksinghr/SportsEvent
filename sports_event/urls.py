@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('RaceMate/', include('app.urls')),
     path('accounts/', include('users.urls')),
+    path('cert/', include('certificate.urls')),
 ]

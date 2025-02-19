@@ -11,6 +11,8 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sports_event.settings')
+setttings_module = 'sports_event.deployment' if 'WEBSITE_HOSTNAME' in os.environ else 'sports_event.settings' 
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', setttings_module)
 
 application = get_wsgi_application()
